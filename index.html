@@ -3604,18 +3604,14 @@ associated with them.</p>
 <div id="relationship-between-age-demographics-and-spending" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Relationship Between
 Age Demographics and Spending</h1>
-<p>The descriptive statistics for the one-way anova was obtained by
-calculating the mean and standard deviation of the variable total spend
-for each age category and then rounded off to two decimals. Using the
-<em>mutate</em> function in the <em>dplyr</em> package, the column
-“Variance” was created. Furthermore, the <em>case_when</em> function was
-used to compute the individual variances for the three age categories by
-taking the square root of the standard deviation. The
-<em>levene_test</em> function from the <em>rstatix</em> library package
-was used to confirm whether the variances were equal. At a glace, we can
-observe that the variances are unequal, which was also confirmed by the
-Levene’s test based on median, and since the group sizes are also
-unequal <span class="citation">(<a href="#ref-Grace-Martin_2023">Grace-Martin 2023</a>)</span>, a Welch
+<p>The group statistics for the one-way anova was obtained by
+calculating the mean, standard deviation and variance of the variable
+total spend for each age category, which was then rounded off to two
+decimals. The <em>levene_test</em> function from the <em>rstatix</em>
+library package was used to confirm whether the variances were equal. At
+a glace, we can observe that the variances are unequal, which was also
+confirmed by the Levene’s test based on median, and since the group
+sizes are also unequal <span class="citation">(<a href="#ref-Grace-Martin_2023">Grace-Martin 2023</a>)</span>, a Welch
 ANOVA was conducted.</p>
 <p>The <em>age_category</em> was converted to a factor variable using
 the <strong>as.factor</strong> built-in function.</p>
@@ -3625,18 +3621,12 @@ the <strong>as.factor</strong> built-in function.</p>
 <span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>                          <span class="fu">group_by</span>(age_category) <span class="sc">%&gt;%</span></span>
 <span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a>                          <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(),</span>
 <span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>                          <span class="at">Mean =</span> <span class="fu">round</span>(<span class="fu">mean</span>(total_spend), <span class="dv">2</span>),</span>
-<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a>                          <span class="at">Standard_Deviation =</span> <span class="fu">round</span>(<span class="fu">sd</span>(total_spend), <span class="dv">2</span>))</span>
-<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a>                          <span class="at">Standard_Deviation =</span> <span class="fu">round</span>(<span class="fu">sd</span>(total_spend), <span class="dv">2</span>),</span>
+<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a>                          <span class="at">Variance =</span> <span class="fu">round</span>(<span class="fu">sqrt</span>(Standard_Deviation), <span class="dv">2</span>))</span>
 <span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a></span>
-<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a>anova_descriptive <span class="ot">&lt;-</span> anova_descriptive <span class="sc">%&gt;%</span></span>
-<span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a>                                          <span class="fu">mutate</span>(<span class="at">Variance =</span> <span class="fu">round</span>(<span class="fu">case_when</span>(</span>
-<span id="cb32-10"><a href="#cb32-10" tabindex="-1"></a>                                          Standard_Deviation <span class="sc">==</span> <span class="fl">378.66</span> <span class="sc">~</span> <span class="fu">sqrt</span>(<span class="fl">378.66</span>),</span>
-<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a>                                          Standard_Deviation <span class="sc">==</span> <span class="fl">338.43</span> <span class="sc">~</span> <span class="fu">sqrt</span>(<span class="fl">338.43</span>),</span>
-<span id="cb32-12"><a href="#cb32-12" tabindex="-1"></a>                                          Standard_Deviation <span class="sc">==</span> <span class="fl">15.28</span> <span class="sc">~</span> <span class="fu">sqrt</span>(<span class="fl">15.28</span>)</span>
-<span id="cb32-13"><a href="#cb32-13" tabindex="-1"></a>                                          ), <span class="dv">2</span>))</span>
-<span id="cb32-14"><a href="#cb32-14" tabindex="-1"></a></span>
-<span id="cb32-15"><a href="#cb32-15" tabindex="-1"></a></span>
-<span id="cb32-16"><a href="#cb32-16" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">paged_table</span>(anova_descriptive)</span></code></pre></div>
+<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">paged_table</span>(anova_descriptive)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["age_category"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["Mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Standard_Deviation"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Variance"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"20-29","2":"69","3":"1072.18","4":"378.66","5":"19.46"},{"1":"30-39","2":"223","3":"865.07","4":"338.43","5":"18.40"},{"1":"40-49","2":"58","3":"499.88","4":"15.28","5":"3.91"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -3973,14 +3963,10 @@ promoting upgrades to higher membership tiers.</p>
 <div id="effect-of-discounts-on-purchase-behaviour" class="section level1" number="8">
 <h1><span class="header-section-number">8</span> Effect of Discounts on
 Purchase Behaviour</h1>
-<p>The descriptive statistics for the independent samples t-test were
-obtained by calculating the mean and standard deviation of the variable
+<p>The group statistics for the independent samples t-test were obtained
+by calculating the mean, standard deviation and variance of the variable
 total spend for discount applied and then rounded off to two decimals.
-Using the <em>mutate</em> function from the <em>dplyr</em> package, the
-column “Variance” was created. Furthermore, the <em>case_when</em>
-function was used to compute the individual variances for discount
-applied by taking the square root of the standard deviation. At a glace,
-we can observe that the variances are roughly equal.</p>
+At a glace, we can observe that the variances are roughly equal.</p>
 <div id="group-statistics-1" class="section level2" number="8.1">
 <h2><span class="header-section-number">8.1</span> Group Statistics</h2>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a>t_test_descriptive <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
@@ -3988,18 +3974,11 @@ we can observe that the variances are roughly equal.</p>
 <span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a>                            <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(),</span>
 <span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a>                                      <span class="at">Mean =</span> <span class="fu">round</span>(<span class="fu">mean</span>(total_spend_transformed), <span class="dv">2</span>),</span>
 <span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a>                                      <span class="at">Standard_Deviation =</span></span>
-<span id="cb42-6"><a href="#cb42-6" tabindex="-1"></a>                                        <span class="fu">round</span>(<span class="fu">sd</span>(total_spend_transformed), <span class="dv">2</span>))</span>
-<span id="cb42-7"><a href="#cb42-7" tabindex="-1"></a></span>
+<span id="cb42-6"><a href="#cb42-6" tabindex="-1"></a>                                        <span class="fu">round</span>(<span class="fu">sd</span>(total_spend_transformed), <span class="dv">2</span>),</span>
+<span id="cb42-7"><a href="#cb42-7" tabindex="-1"></a>                                      <span class="at">Variance =</span> <span class="fu">round</span>(<span class="fu">sqrt</span>(Standard_Deviation), <span class="dv">2</span>))</span>
 <span id="cb42-8"><a href="#cb42-8" tabindex="-1"></a></span>
 <span id="cb42-9"><a href="#cb42-9" tabindex="-1"></a></span>
-<span id="cb42-10"><a href="#cb42-10" tabindex="-1"></a>t_test_descriptive <span class="ot">&lt;-</span> t_test_descriptive <span class="sc">%&gt;%</span></span>
-<span id="cb42-11"><a href="#cb42-11" tabindex="-1"></a>                                      <span class="fu">mutate</span>(<span class="at">Variance =</span> <span class="fu">case_when</span>(</span>
-<span id="cb42-12"><a href="#cb42-12" tabindex="-1"></a>                                      Standard_Deviation <span class="sc">==</span> <span class="fl">461.18</span> <span class="sc">~</span> <span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fl">461.18</span>), <span class="dv">2</span>),</span>
-<span id="cb42-13"><a href="#cb42-13" tabindex="-1"></a>                                      Standard_Deviation <span class="sc">==</span> <span class="fl">213.59</span> <span class="sc">~</span> <span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fl">213.59</span>), <span class="dv">2</span>)</span>
-<span id="cb42-14"><a href="#cb42-14" tabindex="-1"></a>                                      ))</span>
-<span id="cb42-15"><a href="#cb42-15" tabindex="-1"></a></span>
-<span id="cb42-16"><a href="#cb42-16" tabindex="-1"></a></span>
-<span id="cb42-17"><a href="#cb42-17" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">paged_table</span>(t_test_descriptive)</span></code></pre></div>
+<span id="cb42-10"><a href="#cb42-10" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">paged_table</span>(t_test_descriptive)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["discount_applied"],"name":[1],"type":["lgl"],"align":["right"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["Mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Standard_Deviation"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Variance"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"FALSE","2":"175","3":"870.74","4":"461.18","5":"21.48"},{"1":"TRUE","2":"175","3":"819.84","4":"213.59","5":"14.61"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
